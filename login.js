@@ -24,9 +24,9 @@ function callogin(){
 
 
 
-var byteregi=document.getElementById("byteregi")
-var bytelogin=document.getElementById("bytelogin")
-
+var byteregi=document.getElementById("byteregi");
+var bytelogin=document.getElementById("bytelogin");
+var namn=document.getElementById("namn");
 
 var objPeople=[
     {
@@ -44,13 +44,15 @@ var objPeople=[
    
 ]
 
-
+var glasstext=document.getElementById("glasstext");
  var logout=document.getElementById("logout");
-
+var glass=document.getElementById("glass");
  function welcome(){
-    bytelogin.replaceWith(logout)
+    bytelogin.replaceWith(logout);
     byteregi.style.display="none"
-    document.getElementById("glass").innerHTML="Hej vad roligt att se er igen välkomna tillbaka."
+    glass.style.display="none"
+    document.getElementById("glasstext").innerHTML="Hej vad roligt att se er igen välkomna tillbaka.";
+   
  }
 function login() {
 
@@ -59,11 +61,12 @@ var password= document.getElementById("password").value
 
 for(i=0;i<objPeople.length;i++){
     if(username==objPeople[i].username && password==objPeople[i].password){
-       console.log(username+"is loggged in")
+       console.log(username+"is loggged in: ");
        
-        welcome() 
-       localStorage.setItem("isloggedin",username);  
-       return
+        welcome() ;
+        localStorage.setItem("user",JSON.stringify(objPeople));
+       return localStorage.setItem("isloggedin",username);
+    
     }
     }
 }
@@ -72,26 +75,32 @@ for(i=0;i<objPeople.length;i++){
  document.getElementById("islogged").innerHTML=localStorage.getItem("isloggedin",username)
 
 function registister(){
-  
+  byteregi.style.display="block";
     var regististerUser = document.getElementById("newuser").value
     var registerPassword= document.getElementById("newpassword").value
     var newUser={
         username:regististerUser,
         password:registerPassword
     }
-    objPeople.push(newUser)
-    console.log(objPeople)
-    localStorage.setItem("user",JSON.stringify(objPeople))
+    objPeople.push(newUser);
+    console.log(objPeople);
+    console.log("Ny användare: "+regististerUser);
 }
 
 function logoutbutton(){
 localStorage.removeItem("isloggedin");
-
+logout.replaceWith(bytelogin);
+byteregi.style.display="block"
+glass.style.display="block"
 
 }
 
 (function init(){
-    if(localStorage.getItem("isloggedin"))
-    localStorage.setItem("isloggedin",username)
-    
+    if(localStorage.getItem("isloggedin",username=true)){
+welcome();
+    }else{
+        logoutbutton();
+    }
+
 })();
+
