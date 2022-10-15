@@ -1,75 +1,108 @@
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title >Bobs
-    </title>
-    <link rel="stylesheet" href="main.css">
-</head>
-<body>
-    <div class="Meny">
-        <h1 id="rubrik"><i>Bobs Onlineglass</i></h1>
-        
-    </div>
-<h4 id="islogged"></h4>
 
 
 
-    <div class="hej">
-       <span id="bytelogin">
-        <form >
-            <h2>Login</h2>
-            <label >Namn:</label></br>
-            <input id="username"></br></br>
 
-            <label>Lösenord</label></br>
-            <input id="password"></br>
-            
-          <button type="button" onclick="login()">Login</button> 
-        </form>
-      </span>
-        
+
+var byte=document.getElementById("byte")
+
+
+
       
-<span id="byteregi">
-        <form >
-            <h2>Regi</h2>
-            <label >Namn:</label></br>
-            <input id="newuser"></br></br>
-            <label>Lösenord</label></br>
-            <input id="newpassword"></br>
-             <button type="button" onclick="registister()">regi</button>
-        </form>
- </span>      
-</div>
 
-<div class="glassigt"> 
+
+function byteinlogg(){
+    byteregi.replaceWith(bytelogin);
     
+}
 
-   <div class="glasstext">
-    <h3>Hej och välkomna Bobs Onlineglass</h3>
-    <p id="glass">Vi Bobs vill ge en unik chans att få bra glasupplevelse</br>
-    hem till dig. Me våra specialister så lovar vi er en </br>
-    fantastisk glasupplevelse utan krångel.</br></br>
-    Vi vet hur svårt det kan vara att välja bland</br>
-    alla glassmaker, därför har vi gjort det lättare </br>
-    att välja rätt smak för just dig. Med hjälp av </br>
-    flera influencers har vi skärt ner till endast </br>
-    50 smaker. Allt för göra de lättare just er. </br>
-    Klicka här för se våra härliga smaker: <a href="glassmaker.html">Glassmaker</a></br></br>
-    Bobs online glass grundades 2015 av Bob Carlsson.</br></p> 
+function callogin(){
+    bytelogin.replaceWith(byteregi);
+}
 
-<p id="glasstext"></p>
- </div>
 
-</div>  
-    <span id="logout">
- <button onclick="logoutbutton()" >logout</button>
-</span>
 
-        <script src="login.js"></script>
-    </body>
-</html>
+
+var byteregi=document.getElementById("byteregi");
+var bytelogin=document.getElementById("bytelogin");
+var namn=document.getElementById("namn");
+
+var objPeople=[
+    {
+        username:"sam",
+        password:"sam"
+    },
+    {
+        username:"matt",
+        password:"matt"
+    },
+    {
+        username:"fredrik",
+        password:"12345"
+    },
+   
+]
+
+var glasstext=document.getElementById("glasstext");
+ var logout=document.getElementById("logout");
+var glass=document.getElementById("glass");
+ function welcome(){
+    bytelogin.replaceWith(logout);
+    byteregi.style.display="none"
+    glass.style.display="none"
+    document.getElementById("glasstext").innerHTML="Hej vad roligt att se er igen välkomna tillbaka.";
+   
+ }
+ function registister(){
+  byteregi.style.display="block";
+    var regististerUser = document.getElementById("newuser").value
+    var registerPassword= document.getElementById("newpassword").value
+    var newUser={
+        username:regististerUser,
+        password:registerPassword
+    }
+    objPeople.push(newUser);
+    console.log(objPeople);
+    console.log("Ny användare: "+regististerUser);
+}
+
+function login() {
+
+var username= document.getElementById("username").value
+var password= document.getElementById("password").value
+
+for(i=0;i<objPeople.length;i++){
+    if(username==objPeople[i].username && password==objPeople[i].password){
+       console.log(username+"is loggged in: ");
+       
+        welcome() ;
+        localStorage.setItem("user",JSON.stringify(objPeople));
+       return localStorage.setItem("isloggedin",username);
+    
+    }else if(username==objPeople[i].username && password!=objPeople[i].password){
+      alert("fel lösenord");
+    }
+    }
+}
+
+
+ document.getElementById("islogged").innerHTML=localStorage.getItem("isloggedin",username)
+
+
+function logoutbutton(){
+localStorage.removeItem("isloggedin");
+logout.replaceWith(bytelogin);
+byteregi.style.display="block"
+glass.style.display="block"
+
+}
+
+(function init(){
+    if(localStorage.getItem("isloggedin",username=true)){
+welcome();
+    }else{
+        logoutbutton();
+    }
+
+})();
