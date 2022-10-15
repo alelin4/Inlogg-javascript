@@ -67,6 +67,8 @@ for(i=0;i<objPeople.length;i++){
         localStorage.setItem("user",JSON.stringify(objPeople));
        return localStorage.setItem("isloggedin",username);
     
+    }else if(username==objPeople[i].username && password!=objPeople[i].password){
+      alert("fel lösenord");
     }
     }
 }
