@@ -1,15 +1,8 @@
 
 
-
-
-
-
-
 var byte=document.getElementById("byte")
 
 
-
-      
 
 
 function byteinlogg(){
